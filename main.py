@@ -43,7 +43,7 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
 	return rightMin + (valueScaled * rightSpan)
 
 
-# A single pixel
+# A single pixel that is created and then, based on
 class Sparkle:
 
 	def __init__(self,pos,rmax = 255,gmax = 255,bmax = 255,ticker = .01, interval = .01):
@@ -88,7 +88,7 @@ class Sparkle:
 			#check to make sure the pixel isn't firing after its suppsoed to because idk why
 			if not self.done:
 
-				# for smoooooth fading I use only the best; SINE 
+				# for smoooooth fading I use only the best; SINE
 				# Ask your doctor is SINE is right for you!
 				warp = math.sin(self.ticks)
 
@@ -113,7 +113,7 @@ class Sparkle:
 
 			self.last_time = now
 
-# Controls all the pixels
+# Creates a number of sparkles and animates them.
 class Shimmer:
 
 	def __init__(self):
@@ -134,23 +134,25 @@ class Shimmer:
 			#use the random number to determine which sparkle we will make.
 				this_sparkle = Sparkle(find_place(),rmax = this_colour[0],gmax = this_colour[1],bmax = this_colour[2], ticker = count, interval = 0)
 
-			#if randon == 1:
-				# nice warm light
-#				this_sparkle = Sparkle(find_place(),rmax = 255,gmax = 255,bmax = 45, ticker = .01, interval = .0001)
-# pink				this_sparkle = Sparkle(find_place(),rmax = 255,gmax = 0,bmax = 255, ticker = count, interval = 0)
-				 #Choose a place for the new sparkle
-			#	this_sparkle = Sparkle(find_place(),rmax = 0,gmax = 255,bmax = 0, ticker = count, interval = 0)
-				# #Choose a place for the new sparkle
-		#	if randon == 2:
-		#		this_sparkle = Sparkle(find_place(),rmax = 255,gmax = 0,bmax = 0, ticker = count, interval = 0)
-
-		#	if randon  == 3:
-		#		this_sparkle = Sparkle(find_place(),rmax = 0, gmax = 0, bmax = 255, ticker = count, interval = 0)
-
 
 		for sparkles in firing:
 			sparkles.draw()
 
+
+class fragment:
+	pass
+
+class Plasma:
+	def __init__(self):
+		self.tick = 0
+		self.increment = .1
+		pass
+
+	def show(self):
+		for i in range(stripsize):
+			colour = math.sin(i*10+self.tick)
+			pixels[i] = (colour,colour,colour)
+		self.tick += self.increment
 
 # recursive function to find an unoccupied place on the strip
 def find_place():
@@ -167,81 +169,10 @@ def find_place():
 
 #pixels.clear()
 
-scene = Shimmer()
+scene = Plasma() #Shimmer()
 
 while True:
 #	print ("\033c")
 	scene.show()
+	pixels.show()
 #	print(len(occupied))
-
-				# # if we haven't reached full brightness yet
-				# if self.r < 254:
-					# # Brighten our sparkle (needs to be redone to include sine smoothing)
-					# self.r += 1
-					# self.g += 1
-					# self.b += 1
-				# else:
-					# self.ascending = False
-			# else:
-					# self.r -= 1
-					# self.g -= 1
-					# self.b -= 1
-					# if self.r < 1:
-						# self.r = 0
-						# self.g = 0
-						# self.b = 0
-						# self.done = True
-
-#all fade 3 sine
-	# val = abs(int((math.sin(tick/2) * 128) + 128))
-	# val2 = abs(int((math.sin(tick + 3.1) * 128) + 128))
-	# val3 = abs(int((math.sin(tick + 1.5) * 128) + 128))
-
-
-	#trying to get shimmer working.
-	# thistime = time.time()
-	# if thistime - last_time >= interval:
-		# randosparkle = random.randint(1, stripsize * 10) #picks a random number
-		# last_time = thistime
-
-	# for sparkles in firing:
-			# sparkles.show()
-
-
-	# for i in range(stripsize):
-		# val = abs(int((math.sin(tick + (i*.06)) * 128) + 128))
-		# val2 = 0#abs(int((math.sin(tick + (i*.08)+1) * 128) + 128))
-		# val3 = abs(int((math.sin(tick + (i*.1)-1) * 128) + 128))
-		# pixels[i] = (val,val2,val3)
-		# #print("red: ", val, ", ", "Green: ", val2, ", ", "Blue ", val3)
-		# #pixels.fill((val,val2,val3))
-		# tick += .001	
-#The following is the Cish version of the shimmer function
-# /* SHIMMER FUNCTION */
-# void shimmer()
-# {
-
-  # long presentTime = millis();
-  # if((presentTime - previousTime) >= interval[0])
-  # {
-  # int randosparkle = random(0,(stripMax*10)); // picks a random number
-  
-  # for (int i=0; i <= (stripMax-1); i++)//For loop to check random number against magic numbers and set the pixel for activation
-  # {
-    # if (pixelData[i][5] == randosparkle && pixelData[i][0] == 0)
-    # {
-      # pixelData[i][0] = 1;
-      # pixelData[i][1] = random(0,3);
-    # }
-  # }
-
-        # for (int i=0; i <= (stripMax-1); i++)
-        # {
-            # if (pixelData[i][0] == 1)
-            # {
-                # drawPixel(i);
-            # }
-        # }
-        # previousTime = presentTime;
-  # }
-# }
