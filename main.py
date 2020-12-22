@@ -150,8 +150,15 @@ class Plasma:
 
 	def show(self):
 		for i in range(stripsize):
-			colour = math.sin(i*10+self.tick)
+			colour = int(math.sin(i*10+self.tick))
+
+
+			warp = math.sin(i*10+self.tick)
+
+			# following attempts to fade each element of the pixels colour evenly (needs work)
+		 	colour = abs(int(translate(warp, -1, 1, 0, 255)))
 			pixels[i] = (colour,colour,colour)
+			
 		self.tick += self.increment
 
 # recursive function to find an unoccupied place on the strip
